@@ -5,11 +5,11 @@ from urllib.parse import urlparse
 import json
 import urllib
 import csv
+import config
 
 def login_fn():
 	#logging.basicConfig(level=logging.DEBUG)
-	
-	with open('C://GammaTradeApp//credentials.csv', mode='r') as infile:
+	with open(config.root_path+'credentials.csv', mode='r') as infile:
 		reader = csv.reader(infile)
 		credential_dict = {rows[0]:rows[1] for rows in reader}
 
@@ -24,8 +24,8 @@ def login_fn():
 	kite = KiteConnect(api_key=api_key)
 
 	api_url = kite.login_url()
-	login_url = "https://kite.zerodha.com/api/login"
-	two_fa_url = "https://kite.zerodha.com/api/twofa"
+	login_url = config.login_url
+	two_fa_url = config.two_fa_url
 
 	headers = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
@@ -48,3 +48,8 @@ def login_fn():
 
 #data = kite.generate_session(str(request_token), api_secret=secret_api)
 #kite.set_access_token(data["access_token"])
+#profile_url="https://api.kite.trade/session/token"
+#str=api_key + request_token + api_secret
+#checksum = hashlib.sha256(str.encode('utf-8')).hexdigest()
+#payload3 = 'api_key='+api_key+'&request_token='+request_token+'&checksum='+checksum
+#response3 = requests.request("POST", profile_url, headers=headers, data = payload3)
