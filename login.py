@@ -6,6 +6,9 @@ import json
 import urllib
 import csv
 import config
+import hashlib
+import testToken
+import fetchTokenFromFile
 
 def login_fn():
 	#logging.basicConfig(level=logging.DEBUG)
@@ -28,7 +31,8 @@ def login_fn():
 	two_fa_url = config.two_fa_url
 
 	headers = {
-	  'Content-Type': 'application/x-www-form-urlencoded'
+		'X-Kite-Version': '3',
+		'Content-Type': 'application/x-www-form-urlencoded'
 	}
 
 	my_session = requests.Session()
@@ -44,12 +48,20 @@ def login_fn():
 	response_dict=dict(urllib.parse.parse_qsl(urlparse(token_response.url).query))
 	request_token=response_dict["request_token"]
 	success_flag=response_dict["status"]
-	return request_token, success_flag
+	
 
-#data = kite.generate_session(str(request_token), api_secret=secret_api)
-#kite.set_access_token(data["access_token"])
-#profile_url="https://api.kite.trade/session/token"
-#str=api_key + request_token + api_secret
-#checksum = hashlib.sha256(str.encode('utf-8')).hexdigest()
-#payload3 = 'api_key='+api_key+'&request_token='+request_token+'&checksum='+checksum
-#response3 = requests.request("POST", profile_url, headers=headers, data = payload3)
+	#data = kite.generate_session(str(request_token), api_secret=secret_api)
+	#kite.set_access_token(data["access_token"])
+	auth_url=config.auth_url
+	session_str = api_key + request_token + api_secret
+	checksum = hashlib.sha256(str.encode('utf-8')).hexdigest()
+	payload3 = 'api_key='+api_key+'&request_token='+request_token+'&checksum='+checksum
+	response3 = requests.request("POST", auth_url, headers=headers, data = payload3)
+	
+	if(response3.status_code == 200):
+		#update global access once handled
+		return "Login Success"
+	else :
+		testToken.testToken()
+		config.access_token=fetchTokenFromFile.fetchTokenFromFile()
+		return "Login Fail "+str(response3.status_code)+fetchTokenFromFile.fetchTokenFromFile()

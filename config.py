@@ -4,6 +4,7 @@ import csv
 root_path = 'C://GammaTradeApp//'
 login_url = "https://kite.zerodha.com/api/login"
 two_fa_url = "https://kite.zerodha.com/api/twofa"
+auth_url = "https://api.kite.trade/session/token"
 margins_url = "https://api.kite.trade/user/margins"
 fieldnames = ['access_token', 'time_stamp']
 access_token=fetchTokenFromFile.fetchTokenFromFile()

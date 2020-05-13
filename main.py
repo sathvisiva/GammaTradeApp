@@ -5,6 +5,9 @@ import isLoggedIn
 
 
 if __name__=="__main__":
-    print(login.login_fn())
-    print(config.access_token)
+
     print(isLoggedIn.isLoggedIn())
+    print("old token ="+config.access_token)
+    if(isLoggedIn.isLoggedIn() == False):
+        print(login.login_fn())
+        print("new token ="+config.access_token)
