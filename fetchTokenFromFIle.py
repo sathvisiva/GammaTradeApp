@@ -3,7 +3,7 @@ from datetime import datetime
 import os.path
 import config
 
-def fetchTokenFromFIle():
+def fetchTokenFromFile():
 	file_exists = os.path.isfile(config.root_path+'access_token_file.csv')
 	fieldnames = config.fieldnames
 	with open(config.root_path+'access_token_file.csv', mode='r',newline='') as infile:

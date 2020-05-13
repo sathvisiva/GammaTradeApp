@@ -1,8 +1,10 @@
 import login
-import fetchTokenFromFIle
-
+import fetchTokenFromFile
+import config
+import isLoggedIn
 
 
 if __name__=="__main__":
     print(login.login_fn())
-    print(fetchTokenFromFIle.fetchTokenFromFIle())
+    print(config.access_token)
+    print(isLoggedIn.isLoggedIn())

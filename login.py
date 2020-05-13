@@ -13,11 +13,11 @@ def login_fn():
 		reader = csv.reader(infile)
 		credential_dict = {rows[0]:rows[1] for rows in reader}
 
-	api_key=credential_dict["api_key"]
-	user_id=credential_dict["user_id"]
-	password=credential_dict["password"]
-	twofa_value=credential_dict["twofa_value"]
-	api_secret=credential_dict["api_secret"]
+	api_key=config.api_key
+	user_id=config.user_id
+	password=config.password
+	twofa_value=config.twofa_value
+	api_secret=config.api_secret
 
 	payload = 'password='+password+'&user_id='+user_id
 
